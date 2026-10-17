@@ -16,7 +16,7 @@ from fastapi.responses import StreamingResponse
 import asyncio
 app = FastAPI(title="ExamGuard AI API")
 EVIDENCE_DIR = Path(
-    r"C:\Users\shash\exam-malpractice-ai\evidence"
+    r"C:\Users\supri\OneDrive\Desktop\Minor_Project\exam-ai\evidence"
 )
 EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -45,7 +45,7 @@ def home():
 def health():
     return {"status": "healthy"}
 MODEL_PATH = (
-    r"C:\Users\shash\exam-malpractice-ai"
+    r"C:\Users\supri\OneDrive\Desktop\Minor_Project\exam-ai"
     r"\runs\phone_head_v1\weights\best.pt"
 )
 
@@ -113,7 +113,7 @@ async def analyze_video(file: UploadFile = File(...)):
         analysis_id = uuid4().hex[:12]
 
         evidence_dir = (
-            Path(r"C:\Users\shash\exam-malpractice-ai")
+            Path(r"C:\Users\supri\OneDrive\Desktop\Minor_Project\exam-ai")
             / "evidence"
             / f"analysis_{analysis_id}"
         )
@@ -136,7 +136,7 @@ async def analyze_video(file: UploadFile = File(...)):
                 stream=True,
                 conf=0.35,
                 imgsz=640,
-                device=0,
+                device="cpu",
                 vid_stride=2,
                 verbose=False,
             ),
@@ -222,7 +222,7 @@ async def analyze_video(file: UploadFile = File(...)):
 
 
 REPORT_PATH = Path(
-    r"C:\Users\shash\exam-malpractice-ai"
+    r"C:\Users\supri\OneDrive\Desktop\Minor_Project\exam-ai"
     r"\reports\llm_incident_explanation.txt"
 )
 
@@ -322,7 +322,7 @@ async def live_detect():
                     source=frame,
                     conf=0.35,
                     imgsz=640,
-                    device=0,
+                    device="cpu",
                     verbose=False,
                 )
 
